@@ -96,13 +96,6 @@ if ($success) {
      * @param float $paymentFee      Payment fee (optional)
      * @param string $gatewayModule  Gateway module name
      */
-    addInvoicePayment(
-        $invoiceId,
-        $transactionId,
-        $paymentAmount,
-        $paymentFee,
-        $gatewayModuleName
-    );
 
 #update the tblinvoices table
     #update the table to show Payment Pending until IPN updates
