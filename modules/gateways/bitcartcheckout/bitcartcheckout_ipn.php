@@ -48,75 +48,16 @@ if ($order_status != $invoice->status):
     die();
 endif;
 $orderid = $invoice->order_id;
-#first see if the ipn matches
-#get the user id first
-$table = "_bitcart_checkout_transactions";
-$fields = "order_id,transaction_id";
-$where = array("order_id" => $orderid, "transaction_id" => $order_invoice);
-$result = select_query($table, $fields, $where);
-$rowdata = mysql_fetch_array($result);
 
-$btn_id = $rowdata['transaction_id'];
-if ($btn_id):
-    switch ($order_status) {
-        #complete, update invoice table to Paid
-        case 'complete':
-            $table = "tblinvoices";
-            $update = array("status" => 'Paid', 'datepaid' => date("Y-m-d H:i:s"));
-            $where = array("id" => $orderid, "paymentmethod" => "bitcartcheckout");
-            try {
-                update_query($table, $update, $where);
-            } catch (Exception $e) {
-            }
-            #update the bitcart_invoice table
-            $table = "_bitcart_checkout_transactions";
-            $update = array("transaction_status" => $order_status);
-            $where = array("order_id" => $orderid, "transaction_id" => $order_invoice);
-            try {
-                update_query($table, $update, $where);
-            } catch (Exception $e) {
-            }
+$orderid = checkCbInvoiceID($orderid, $gatewayParams['name']);
+checkCbTransID($order_invoice);
 
-            addInvoicePayment(
-                $orderid,
-                $order_invoice,
-                $invoice->price,
-                0,
-                'bitcartcheckout'
-            );
-
-            break;
-
-        case 'invalid':
-            $table = "tblinvoices";
-            $update = array("status" => 'Unpaid');
-            $where = array("id" => $orderid, "paymentmethod" => "bitcartcheckout");
-            try {
-                update_query($table, $update, $where);
-            } catch (Exception $e) {
-            }
-
-            #update the bitcart_invoice table
-            $table = "_bitcart_checkout_transactions";
-            $update = array("transaction_status" => $order_status);
-            $where = array("order_id" => $orderid, "transaction_id" => $order_invoice);
-            try {
-                update_query($table, $update, $where);
-            } catch (Exception $e) {
-            }
-
-            break;
-
-        #expired, remove from transaction table, wont be in invoice table
-        case 'expired':
-            #delete any orphans
-            $table = "_bitcart_checkout_transactions";
-            $delete = 'DELETE FROM _bitcart_checkout_transactions WHERE transaction_id = "' . $order_invoice . '"';
-            try {
-                full_query($delete);
-            } catch (Exception $e) {
-            }
-            break;
-
-    }
-endif; #end of the table lookup
+if ($order_status == 'complete') {
+    addInvoicePayment(
+        $orderid,
+        $order_invoice,
+        $invoice->price,
+        0,
+        'bitcartcheckout'
+    );
+}
