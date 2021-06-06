@@ -1,6 +1,6 @@
 <?php
 /**
- * BitcartCC Checkout 1.0.1
+ * BitcartCC Checkout 1.0.2
  *
  * Within the module itself, all functions must be prefixed with the module
  * filename, followed by an underscore, and then the function name. For this
@@ -34,7 +34,7 @@ function bitcartcheckout_MetaData()
 {
     return array(
         'DisplayName' => 'BitcartCC_Checkout_WHCMS',
-        'APIVersion' => '1.0.1',
+        'APIVersion' => '1.0.2',
         'DisableLocalCreditCardInput' => false,
         'TokenisedStorage' => false,
     );
@@ -90,7 +90,7 @@ function bitcartcheckout_config()
         'bitcartcc_store_id' => array(
             'FriendlyName' => 'Store ID',
             'Type' => 'text',
-            'Default' => '1',
+            'Default' => '',
             'Description' => 'Store ID of your BitcartCC Store.',
         ),
 
@@ -146,7 +146,7 @@ function bitcartcheckout_link($config_params)
     $protocol = 'https://';
 
     $params->price = $amount;
-    $params->store_id = intval($config_params['bitcartcc_store_id']);
+    $params->store_id = $config_params['bitcartcc_store_id'];
     $params->currency = $currencyCode;
     $params->order_id = trim($invoiceId);
 
