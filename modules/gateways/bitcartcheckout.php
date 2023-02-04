@@ -1,6 +1,6 @@
 <?php
 /**
- * BitcartCC Checkout 1.0.2
+ * BitcartCC Checkout 1.0.3
  *
  * Within the module itself, all functions must be prefixed with the module
  * filename, followed by an underscore, and then the function name. For this
@@ -34,7 +34,7 @@ function bitcartcheckout_MetaData()
 {
     return array(
         'DisplayName' => 'BitcartCC_Checkout_WHCMS',
-        'APIVersion' => '1.0.2',
+        'APIVersion' => '1.0.3',
         'DisableLocalCreditCardInput' => false,
         'TokenisedStorage' => false,
     );
@@ -157,7 +157,7 @@ function bitcartcheckout_link($config_params)
 
     // create the invoice
 
-    $invoice = send_request(sprintf('%s/%s', $api_url, 'invoices'), $params);
+    $invoice = send_request(sprintf('%s/%s', $api_url, 'invoices/order_id/' . urlencode($params->order_id)), $params);
     $invoiceID = $invoice->id;
 
     $htmlOutput .= '<button name = "bitcart-payment" class = "btn btn-success btn-sm" onclick = "showModal();return false;">' . $langPayNow . '</button>';
