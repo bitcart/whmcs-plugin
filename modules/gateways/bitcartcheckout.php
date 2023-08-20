@@ -1,6 +1,6 @@
 <?php
 /**
- * BitcartCC Checkout 1.0.3
+ * Bitcart Checkout 1.0.4
  *
  * Within the module itself, all functions must be prefixed with the module
  * filename, followed by an underscore, and then the function name. For this
@@ -33,8 +33,8 @@ if (!defined("WHMCS")) {
 function bitcartcheckout_MetaData()
 {
     return array(
-        'DisplayName' => 'BitcartCC_Checkout_WHCMS',
-        'APIVersion' => '1.0.3',
+        'DisplayName' => 'Bitcart_Checkout_WHCMS',
+        'APIVersion' => '1.0.4',
         'DisableLocalCreditCardInput' => false,
         'TokenisedStorage' => false,
     );
@@ -70,28 +70,28 @@ function bitcartcheckout_config()
         // defined here for backwards compatibility
         'FriendlyName' => array(
             'Type' => 'System',
-            'Value' => 'BitcartCC Checkout',
+            'Value' => 'Bitcart Checkout',
         ),
 
-        'bitcartcc_api_endpoint' => array(
+        'bitcart_api_endpoint' => array(
             'FriendlyName' => 'API Endpoint',
             'Type' => 'text',
             'Default' => '',
-            'Description' => 'Your BitcartCC instance\'s Merchants API URL.',
+            'Description' => 'Your Bitcart instance\'s Merchants API URL.',
         ),
 
-        'bitcartcc_admin_url' => array(
+        'bitcart_admin_url' => array(
             'FriendlyName' => 'Admin URL',
             'Type' => 'text',
             'Default' => '',
-            'Description' => 'Your BitcartCC instance\'s Admin Panel URL.',
+            'Description' => 'Your Bitcart instance\'s Admin Panel URL.',
         ),
 
-        'bitcartcc_store_id' => array(
+        'bitcart_store_id' => array(
             'FriendlyName' => 'Store ID',
             'Type' => 'text',
             'Default' => '',
-            'Description' => 'Store ID of your BitcartCC Store.',
+            'Description' => 'Store ID of your Bitcart Store.',
         ),
 
     );
@@ -127,8 +127,8 @@ function bitcartcheckout_link($config_params)
 <?php
 
     // Settings
-    $admin_url = $config_params['bitcartcc_admin_url'];
-    $api_url = strtolower($config_params['bitcartcc_api_endpoint']);
+    $admin_url = $config_params['bitcart_admin_url'];
+    $api_url = strtolower($config_params['bitcart_api_endpoint']);
     // Invoice Parameters
     $invoiceId = $config_params['invoiceid'];
     $amount = $config_params['amount'];
@@ -146,7 +146,7 @@ function bitcartcheckout_link($config_params)
     $protocol = 'https://';
 
     $params->price = $amount;
-    $params->store_id = $config_params['bitcartcc_store_id'];
+    $params->store_id = $config_params['bitcart_store_id'];
     $params->currency = $currencyCode;
     $params->order_id = trim($invoiceId);
 

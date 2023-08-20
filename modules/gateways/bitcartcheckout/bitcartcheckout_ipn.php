@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BitcartCC Checkout IPN 3.0.1.7
+ * Bitcart Checkout IPN 3.0.1.7
  *
  * This file demonstrates how a payment gateway callback should be
  * handled within WHMCS.
@@ -35,7 +35,7 @@ function checkInvoiceStatus($url)
 
 $gatewayModuleName = 'bitcartcheckout';
 $gatewayParams = getGatewayVariables($gatewayModuleName);
-$api_url = $gatewayParams['bitcartcc_api_endpoint'];
+$api_url = $gatewayParams['bitcart_api_endpoint'];
 
 $data = json_decode(file_get_contents("php://input"), true);
 
