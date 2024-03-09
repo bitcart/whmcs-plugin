@@ -87,6 +87,13 @@ function bitcartcheckout_config()
             'Description' => 'Your Bitcart instance\'s Admin Panel URL.',
         ),
 
+        'bitcart_admin_url_tor' => array(
+            'FriendlyName' => 'Admin URL (Tor)',
+            'Type' => 'text',
+            'Default' => '',
+            'Description' => 'Your Bitcart instance\'s Admin Panel URL (Tor). Will only be used if the WHMCS is accessed via Tor.',
+        ),
+
         'bitcart_store_id' => array(
             'FriendlyName' => 'Store ID',
             'Type' => 'text',
@@ -127,7 +134,12 @@ function bitcartcheckout_link($config_params)
 <?php
 
     // Settings
-    $admin_url = $config_params['bitcart_admin_url'];
+    $admin_url_tor = $config_params['bitcart_admin_url_tor'];
+    $admin_url_pub = $config_params['bitcart_admin_url'];
+
+    $is_tor_enabled = preg_match("/\.onion$/", $_SERVER['HTTP_HOST']) && $admin_url_tor != '';
+    $admin_url = $is_tor_enabled ? $admin_url_tor : $admin_url_pub;
+
     $api_url = strtolower($config_params['bitcart_api_endpoint']);
     // Invoice Parameters
     $invoiceId = $config_params['invoiceid'];
