@@ -91,7 +91,7 @@ function bitcartcheckout_config()
             'FriendlyName' => 'Admin URL (Tor)',
             'Type' => 'text',
             'Default' => '',
-            'Description' => 'Your Bitcart instance\'s Admin Panel URL (Tor).',
+            'Description' => 'Your Bitcart instance\'s Admin Panel URL (Tor). Will only be used if the WHMCS is accessed via Tor.',
         ),
 
         'bitcart_store_id' => array(
