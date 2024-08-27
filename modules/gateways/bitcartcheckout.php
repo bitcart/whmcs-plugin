@@ -163,7 +163,6 @@ function bitcartcheckout_link($config_params)
     $params->order_id = trim($invoiceId);
 
     $params->notification_url = $protocol . $_SERVER['SERVER_NAME'] . $dir . '/modules/gateways/bitcartcheckout/bitcartcheckout_ipn.php';
-    $params->redirect_url = $params->notificationURL;
 
     $params->buyer_email = $email;
 
